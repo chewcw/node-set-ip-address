@@ -30,9 +30,9 @@ exports.configure = async (configs) => {
 
 }
 
-exports.restartService = async () => {
+exports.restartService = async (nicName) => {
   try {
-    await execPromise('service networking restart')
+    await execPromise(`ifdown --force ${nicName} && ifup ${nicName}`)
   } catch (err) {
     console.log(err)
     return Promise.reject(err)
